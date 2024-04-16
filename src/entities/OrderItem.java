@@ -92,7 +92,7 @@ public class OrderItem {
 	}
 	
 	public String toString() {
-		return "Descrição do produto: "
+		return "Produto: "
 				+ product.getDescription()
 				+ " | Valor unitário: "
 				+ unitValue

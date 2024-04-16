@@ -91,6 +91,25 @@ public class OrderItemDao {
 		}
 	}
 	
+	public void deleteByOrderItem(Integer id) {
+		String sql = "DELETE FROM geral.pedidositens "
+				+ "WHERE idpedido = ?";
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, id);
+			
+			ps.execute();
+			ps.close();
+			connection.close();
+		}
+		
+		catch (SQLException e) {
+			System.out.println("Erro ao excluir o registro do item do pedido.");
+			e.printStackTrace();
+		}
+	}
+	
 	public List<OrderItem> findByOrder(Integer id) {
 		String sql = "SELECT "
 				+ "Pedido.idpedido, "

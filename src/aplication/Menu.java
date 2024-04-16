@@ -3,7 +3,10 @@ package aplication;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import entities.Client;
 import entities.Order;
@@ -50,23 +53,20 @@ public class Menu {
 	}
 	
 	public static void imprimirPedidos() {
-		System.out.println("###############################"
+		System.out.println("\n###############################"
 				+ "\n#       LISTA DE PEDIDOS      #"
 				+ "\n###############################");
 		OrderDao orderDao = new OrderDao();
-		OrderItemDao orderItemDao = new OrderItemDao();
 		
-		for (Order o : orderDao.findAll()) {
+		List<Order> orders = orderDao.findAll();
+		
+		for (Order o : orders) {
 			System.out.println(o);
-			for (OrderItem oi : orderItemDao.findByOrder(o.getId())) {
-				System.out.println(oi);
-				
-			}
 		}
 	}
 	
 	public static void novoPedido() throws ParseException {
-		System.out.println("###############################"
+		System.out.println("\n###############################"
 				+ "\n#         NOVO PEDIDO         #"
 				+ "\n###############################");
 		System.out.print("Informe a data do pedido: ");
@@ -136,10 +136,11 @@ public class Menu {
 		}
 		
 		System.out.println("Pedido incluído com sucesso.");
+		sc.nextLine();
 	}
 	
 	public static void editarPedido() throws ParseException {
-		System.out.println("###############################"
+		System.out.println("\n###############################"
 				+ "\n#        EDITAR PEDIDO        #"
 				+ "\n###############################");
 		System.out.print("Digite o código do pedido: ");
@@ -185,9 +186,16 @@ public class Menu {
 		System.out.print("Digite o código do pedido: ");
 		Integer id = sc.nextInt();
 		
-		OrderDao dao = new OrderDao();
-		dao.delete(id);
+		OrderDao orderDao = new OrderDao();
+		orderDao.delete(id);
+		
 		System.out.println("Pedido excluído com sucesso!");
+		
+		OrderItemDao orderItemDao = new OrderItemDao();
+		orderItemDao.deleteByOrderItem(id);
+		
+		System.out.println("Itens do pedido excluídos com sucesso!");
+		sc.nextLine();
 	}
 	
 

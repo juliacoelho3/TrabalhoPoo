@@ -5,13 +5,17 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import db.ConnectionFactory;
 import entities.Client;
 import entities.Order;
+import entities.OrderItem;
+import entities.Product;
 
 
 
@@ -244,9 +248,17 @@ public class OrderDao {
 	                   rs.getDouble("valortotal"),
 	                   rs.getString("observacao"),
 	                   client);
+	            
+	            OrderItemDao orderItemDao = new OrderItemDao();
+	            List<OrderItem> orderItem = orderItemDao.findByOrder(order.getId());
+	            
+	            for(OrderItem oi : orderItem) {
+	            	order.addItem(oi);
+	            }
 	            	
 	            orders.add(order);
 	        }
+	        
 	        
 	        rs.close();
 	        ps.close();

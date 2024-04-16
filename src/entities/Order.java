@@ -90,6 +90,14 @@ public class Order {
 		return items;
 	}
 	
+	public String printItems() {
+		String imprecao = "";
+		for(OrderItem oi : items) {
+			imprecao += oi.toString() + "\n";
+		}
+		return imprecao;
+	}
+	
 	public void addItem(OrderItem orderItem) {
 		items.add(orderItem);
 	}
@@ -126,6 +134,8 @@ public class Order {
 				+ "\nCliente: "
 				+ client.getId()
 				+ " - "
-				+ client.getName();
+				+ client.getName()
+				+ "\n"
+				+ printItems();
 	}
 }
